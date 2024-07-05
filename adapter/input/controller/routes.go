@@ -4,8 +4,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRoutes(app *gin.Engine) {
+func InitRoutes(app *gin.Engine, userController UserControllerInterface) {
 
-	app.GET("/")
+	app.POST("/user", userController.CreateUser)
 
 }
