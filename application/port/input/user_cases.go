@@ -10,4 +10,5 @@ type UserServiceInterface interface {
 	UpdateUser(domain.UserDomain) *rest_err.RestErr
 	DeleteUser(domain.UserDomain) *rest_err.RestErr
 	FindUserByEmail(domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr)
+	FindUserByID(domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr)
 }

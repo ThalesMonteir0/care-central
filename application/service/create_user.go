@@ -7,7 +7,7 @@ import (
 )
 
 func (us *userService) CreateUser(domain domain.UserDomain) *rest_err.RestErr {
-	if user, _ := us.FindUserByEmail(domain); user != nil {
+	if user, _ := us.findUserByEmail(domain); user != nil {
 		return rest_err.NewBadRequestError("user exists")
 	}
 

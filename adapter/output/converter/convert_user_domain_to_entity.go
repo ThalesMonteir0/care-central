@@ -6,7 +6,7 @@ import (
 )
 
 func ConvertUserDomainToEntity(domain domain.UserDomain) entity.User {
-	return entity.User{
+	userEntity := entity.User{
 		Name:     domain.Name,
 		Email:    domain.Email,
 		Password: domain.Password,
@@ -14,4 +14,8 @@ func ConvertUserDomainToEntity(domain domain.UserDomain) entity.User {
 		Active:   domain.Active,
 		ClinicID: domain.ClinicID,
 	}
+
+	userEntity.ID = uint(domain.ID)
+
+	return userEntity
 }
