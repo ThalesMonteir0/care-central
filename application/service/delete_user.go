@@ -6,6 +6,9 @@ import (
 )
 
 func (us *userService) DeleteUser(domain domain.UserDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if err := us.repository.DeleteUser(domain); err != nil {
+		return err
+	}
+
+	return nil
 }
