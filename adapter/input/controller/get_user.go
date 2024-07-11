@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/ThalesMonteir0/care-central/adapter/input/converter"
 	"github.com/ThalesMonteir0/care-central/application/domain"
 	"github.com/ThalesMonteir0/care-central/configuration/rest_err"
 	"github.com/gin-gonic/gin"
@@ -25,6 +26,6 @@ func (uc *userController) GetUser(ctx *gin.Context) {
 		return
 	}
 
-	ctx.JSON(http.StatusOK, user)
+	ctx.JSON(http.StatusOK, converter.ConvertUserDomainToResponse(*user))
 	return
 }
