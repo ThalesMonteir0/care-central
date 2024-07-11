@@ -2,7 +2,14 @@ package domain
 
 import (
 	"github.com/ThalesMonteir0/care-central/configuration/rest_err"
+	"github.com/golang-jwt/jwt/v5"
 	"golang.org/x/crypto/bcrypt"
+	"os"
+	"time"
+)
+
+const (
+	JWT_SECRET = "JWT_SECRET"
 )
 
 type UserDomain struct {
@@ -25,4 +32,25 @@ func (ud *UserDomain) EncryptedPassword() *rest_err.RestErr {
 	ud.Password = string(passwordEncrypted)
 
 	return nil
+}
+
+func (ud *UserDomain) GenerateToken() (string, *rest_err.RestErr) {
+	secret := os.Getenv(JWT_SECRET)
+
+	claims := jwt.MapClaims{
+		"id":        ud.ID,
+		"name":      ud.Name,
+		"email":     ud.Email,
+		"clinic_id": ud.ClinicID,
+		"role":      ud.Role,
+		"exp":       time.Now().Add(time.Hour * 3),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, err := token.SignedString([]byte(secret))
+	if err != nil {
+		return "", rest_err.NewInternalServerError("error trying to generate token jwt")
+	}
+
+	return tokenString, nil
 }

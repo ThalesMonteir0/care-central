@@ -6,14 +6,14 @@ import (
 	"github.com/ThalesMonteir0/care-central/configuration/rest_err"
 )
 
-func (ur *userRepository) FindUserByEmail(userDomain domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr) {
+func (ur *userRepository) FindUserByEmail(userDomain domain.UserDomain) (*domain.UserDomain, *domain.ClinicDomain, *rest_err.RestErr) {
 	userEntity := converter.ConvertUserDomainToEntity(userDomain)
 
 	if err := ur.db.Preload("Clinic").First(&userEntity, "email = ?", userEntity.Email).Error; err != nil {
-		return nil, rest_err.NewBadRequestError("unable get user")
+		return nil, nil, rest_err.NewBadRequestError("unable get user")
 	}
 
-	return converter.ConverterUserEntityToDomain(userEntity), nil
+	return converter.ConverterUserEntityToDomain(userEntity), converter.ConvertUserEntityToClinicDomain(userEntity), nil
 }
 
 func (ur *userRepository) FindUserByID(userDomain domain.UserDomain) (*domain.UserDomain, *domain.ClinicDomain, *rest_err.RestErr) {
