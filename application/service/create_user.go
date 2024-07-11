@@ -8,7 +8,7 @@ import (
 
 func (us *userService) CreateUser(domain domain.UserDomain) *rest_err.RestErr {
 	if user, _ := us.repository.FindUserByEmail(domain); user != nil {
-		return rest_err.NewBadRequestError("user exists")
+		return rest_err.NewBadRequestError("user already exists")
 	}
 
 	domain.Email = strings.ToUpper(domain.Email)

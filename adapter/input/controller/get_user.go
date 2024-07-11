@@ -19,8 +19,8 @@ func (uc *userController) GetUser(ctx *gin.Context) {
 
 	userDomain := domain.UserDomain{ID: id}
 
-	user, err := uc.service.FindUserByID(userDomain)
-	if err != nil {
+	user, errService := uc.service.FindUserByID(userDomain)
+	if errService != nil {
 		errRest := rest_err.NewInternalServerError("unable get user id")
 		ctx.JSON(errRest.Code, errRest.Message)
 		return

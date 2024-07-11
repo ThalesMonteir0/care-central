@@ -23,6 +23,7 @@ func (uc *userController) CreateUser(ctx *gin.Context) {
 		Email:    userRequest.Email,
 		Active:   true,
 		Role:     "ADMIN",
+		ClinicID: userRequest.ClinicID,
 	}
 
 	if err := uc.service.CreateUser(userDomain); err != nil {
