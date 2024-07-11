@@ -6,7 +6,7 @@ import (
 )
 
 func (us *userService) FindUserByID(domain domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr) {
-	user, err := us.repository.FindUserByID(domain)
+	user, _, err := us.repository.FindUserByID(domain)
 	if err != nil {
 		return nil, err
 	}

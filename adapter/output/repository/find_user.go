@@ -16,12 +16,12 @@ func (ur *userRepository) FindUserByEmail(userDomain domain.UserDomain) (*domain
 	return converter.ConverterUserEntityToDomain(userEntity), nil
 }
 
-func (ur *userRepository) FindUserByID(userDomain domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr) {
+func (ur *userRepository) FindUserByID(userDomain domain.UserDomain) (*domain.UserDomain, *domain.ClinicDomain, *rest_err.RestErr) {
 	userEntity := converter.ConvertUserDomainToEntity(userDomain)
 
 	if err := ur.db.Preload("Clinic").First(&userEntity, userEntity.ID).Error; err != nil {
-		return nil, rest_err.NewBadRequestError("unable get user")
+		return nil, nil, rest_err.NewBadRequestError("unable get user")
 	}
 
-	return converter.ConverterUserEntityToDomain(userEntity), nil
+	return converter.ConverterUserEntityToDomain(userEntity), converter.ConvertUserEntityToClinicDomain(userEntity), nil
 }

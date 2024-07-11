@@ -10,5 +10,5 @@ type UserRepositoryInterface interface {
 	UpdateUser(userDomain domain.UserDomain) *rest_err.RestErr
 	DeleteUser(userDomain domain.UserDomain) *rest_err.RestErr
 	FindUserByEmail(userDomain domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr)
-	FindUserByID(userDomain domain.UserDomain) (*domain.UserDomain, *rest_err.RestErr)
+	FindUserByID(userDomain domain.UserDomain) (*domain.UserDomain, *domain.ClinicDomain, *rest_err.RestErr)
 }

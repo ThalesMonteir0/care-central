@@ -6,3 +6,8 @@ type UserRequest struct {
 	Password string `json:"password" biding:"required,min=6"`
 	ClinicID int    `json:"clinic_id" biding:"required"`
 }
+
+type UserLogin struct {
+	Email    string `json:"email" biding:"required"`
+	Password string `json:"password" biding:"required,min=6"`
+}
