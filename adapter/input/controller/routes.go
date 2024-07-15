@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRoutes(app *gin.Engine, userController UserControllerInterface) {
+func InitRoutes(app *gin.Engine, userController UserControllerInterface, patientController PatientControllerInterface) {
 	//users
 	app.POST("/user", userController.CreateUser)
 	app.GET("/user/:id", userController.GetUser)
@@ -12,6 +12,6 @@ func InitRoutes(app *gin.Engine, userController UserControllerInterface) {
 	app.POST("/login", userController.Login)
 
 	//patients
-	app.GET("/patient")
+	app.GET("/patient", patientController.getPatient)
 
 }
