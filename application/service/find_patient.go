@@ -6,6 +6,11 @@ import (
 )
 
 func (p *patientService) FindPatient(domain domain.PatientDomain) ([]domain.PatientDomain, *rest_err.RestErr) {
-	//TODO implement me
-	panic("implement me")
+
+	patients, err := p.repository.FindPatients(domain)
+	if err != nil {
+		return nil, err
+	}
+
+	return patients, nil
 }
