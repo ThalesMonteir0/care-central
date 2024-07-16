@@ -6,6 +6,9 @@ import (
 )
 
 func (p *patientService) DeletePatient(domain domain.PatientDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if err := p.repository.DeletePatient(domain); err != nil {
+		return err
+	}
+
+	return nil
 }
