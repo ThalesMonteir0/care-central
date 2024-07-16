@@ -6,6 +6,11 @@ import (
 )
 
 func (p *patientService) CreatePatient(domain domain.PatientDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	domain.ToUpperCaseName()
+
+	if err := p.repository.CreatePatient(domain); err != nil {
+		return err
+	}
+
+	return nil
 }

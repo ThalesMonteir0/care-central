@@ -16,7 +16,7 @@ func (p *patientController) getPatient(ctx *gin.Context) {
 		return
 	}
 
-	patientDomain := domain.PatientDomain{ID: clinicID}
+	patientDomain := domain.PatientDomain{ClinicID: clinicID}
 
 	patient, err := p.service.FindPatient(patientDomain)
 	if err != nil {

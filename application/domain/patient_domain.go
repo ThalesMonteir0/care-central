@@ -1,6 +1,9 @@
 package domain
 
-import "time"
+import (
+	"strings"
+	"time"
+)
 
 type PatientDomain struct {
 	ID             int
@@ -8,4 +11,8 @@ type PatientDomain struct {
 	ResponsibleCPF string
 	DateOfBirth    time.Time
 	ClinicID       int
+}
+
+func (p *PatientDomain) ToUpperCaseName() {
+	p.Name = strings.ToUpper(p.Name)
 }
