@@ -10,5 +10,5 @@ type PatientRepositoryInterface interface {
 	FindPatients(domain.PatientDomain) ([]domain.PatientDomain, *rest_err.RestErr)
 	DeletePatient(domain.PatientDomain) *rest_err.RestErr
 	UpdatePatient(domain.PatientDomain) *rest_err.RestErr
-	//FindPatientByID(domain.PatientDomain) (*domain.PatientDomain, *rest_err.RestErr)
+	FindPatientByID(domain.PatientDomain) (*domain.PatientDomain, *rest_err.RestErr)
 }

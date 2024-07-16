@@ -14,5 +14,6 @@ func InitRoutes(app *gin.Engine, userController UserControllerInterface, patient
 	//patients
 	app.GET("/patient/:clinic_id", patientController.getPatient)
 	app.POST("/patient", patientController.CreatePatient)
+	app.PUT("/patient/:id", patientController.UpdatePatient)
 
 }

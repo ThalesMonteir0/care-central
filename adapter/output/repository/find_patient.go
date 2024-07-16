@@ -17,3 +17,14 @@ func (p *patientRepository) FindPatients(domain domain.PatientDomain) ([]domain.
 
 	return converter.ConvertPatientsEntitiesToDomains(patients), nil
 }
+
+func (p *patientRepository) FindPatientByID(domain domain.PatientDomain) (*domain.PatientDomain, *rest_err.RestErr) {
+	var patient entity.Patient
+	patientEntity := converter.ConvertPatientDomainToEntity(domain)
+
+	if result := p.db.First(&patient, patientEntity.ID); result.Error != nil {
+		return nil, rest_err.NewBadRequestError("unable get patient")
+	}
+
+	return converter.ConverterPatientEntityToDomain(patient), nil
+}

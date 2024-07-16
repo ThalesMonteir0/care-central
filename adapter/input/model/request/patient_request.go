@@ -8,3 +8,9 @@ type PatientRequest struct {
 	ClinicID       int       `json:"clinic_id" biding:"required,min=1"`
 	DateOfBirth    time.Time `json:"date_of_birth" biding:"required"`
 }
+
+type PatientRequestUpdate struct {
+	Name           string    `json:"name"`
+	ResponsibleCPF string    `json:"responsible_cpf"`
+	DateOfBirth    time.Time `json:"date_of_birth"`
+}
