@@ -4,7 +4,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func InitRoutes(app *gin.Engine, userController UserControllerInterface, patientController PatientControllerInterface) {
+func InitRoutes(app *gin.Engine,
+	userController UserControllerInterface,
+	patientController PatientControllerInterface,
+	sessionController SessionControllerInterface) {
+
 	//users
 	app.POST("/user", userController.CreateUser)
 	app.GET("/user/:id", userController.GetUser)
@@ -17,4 +21,6 @@ func InitRoutes(app *gin.Engine, userController UserControllerInterface, patient
 	app.PUT("/patient/:id", patientController.UpdatePatient)
 	app.DELETE("/patient/:id", patientController.DeletePatient)
 
+	//sessions
+	app.POST("/session", sessionController.CreateSession)
 }
