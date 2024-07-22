@@ -11,3 +11,9 @@ type SessionRequest struct {
 	ValueSession  float64   `json:"value_session" biding:"required,min=0"`
 	DtSession     time.Time `json:"dt_session" biding:"required"`
 }
+
+type SessionUpdateRequest struct {
+	Paid         bool      `json:"paid" biding:"required"`
+	ValueSession float64   `json:"value_session" biding:"required,min=0"`
+	DtSession    time.Time `json:"dt_session" biding:"required"`
+}

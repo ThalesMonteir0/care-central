@@ -8,8 +8,14 @@ import (
 )
 
 func (s *sessionRepository) FindSessionByID(domain domain.SessionDomain) (*domain.SessionDomain, *rest_err.RestErr) {
-	//TODO implement me
-	panic("implement me")
+	clinicID := domain.ClinicID
+	var sessionEntity entity.Session
+
+	if result := s.db.First(&sessionEntity, clinicID); result.Error != nil {
+		return nil, rest_err.NewBadRequestError("unable get session by session_id")
+	}
+
+	return converter.ConverterSessionEntityToDomain(sessionEntity), nil
 }
 
 func (s *sessionRepository) FindSessions(domain domain.SessionDomain) ([]domain.SessionDomain, *rest_err.RestErr) {
