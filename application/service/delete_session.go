@@ -6,6 +6,9 @@ import (
 )
 
 func (s *sessionService) DeleteSession(domain domain.SessionDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if err := s.repository.DeleteSession(domain); err != nil {
+		return err
+	}
+
+	return nil
 }
