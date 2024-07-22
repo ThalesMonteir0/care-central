@@ -16,7 +16,7 @@ func (s *sessionRepository) FindSessions(domain domain.SessionDomain) ([]domain.
 	clinicID := domain.ClinicID
 	var sessionEntity []entity.Session
 
-	if result := s.db.First(&sessionEntity, clinicID); result.Error != nil {
+	if result := s.db.Find(&sessionEntity, "clinic_id = ?", clinicID); result.Error != nil {
 		return nil, rest_err.NewBadRequestError("unable get sessions by clinic_id")
 	}
 
