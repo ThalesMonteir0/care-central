@@ -6,6 +6,11 @@ import (
 )
 
 func (s *sessionService) CreateSession(domain domain.SessionDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	//todo: validar se patient by clinicID existe.
+
+	if err := s.repository.CreateSession(domain); err != nil {
+		return err
+	}
+
+	return nil
 }
