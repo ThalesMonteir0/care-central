@@ -23,4 +23,9 @@ func InitRoutes(app *gin.Engine,
 
 	//sessions
 	app.POST("/session", sessionController.CreateSession)
+	app.GET("/session/:clinic_id", sessionController.GetSession)
+	app.DELETE("/session/:clinic_id/:session_id", sessionController.Delete)
+	app.PUT("/session/:clinic_id/:session_id", sessionController.UpdateSession)
+
+	//form_session
 }

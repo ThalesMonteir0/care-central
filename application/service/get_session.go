@@ -6,6 +6,11 @@ import (
 )
 
 func (s *sessionService) GetSessions(domain domain.SessionDomain) ([]domain.SessionDomain, *rest_err.RestErr) {
-	//TODO implement me
-	panic("implement me")
+
+	sessions, err := s.repository.FindSessions(domain)
+	if err != nil {
+		return nil, err
+	}
+
+	return sessions, nil
 }

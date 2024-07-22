@@ -1,8 +1,31 @@
 package controller
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/ThalesMonteir0/care-central/application/domain"
+	"github.com/ThalesMonteir0/care-central/configuration/rest_err"
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
+)
 
 func (s *sessionController) GetSession(ctx *gin.Context) {
-	//TODO implement me
-	panic("implement me")
+	clinicID, errConv := strconv.Atoi(ctx.Param("clinic_id"))
+	if errConv != nil {
+		errRest := rest_err.NewInternalServerError("unable get clinic_id")
+		ctx.JSON(errRest.Code, errRest.Message)
+		return
+	}
+
+	sessionDomain := domain.SessionDomain{
+		ClinicID: clinicID,
+	}
+
+	sessions, err := s.service.GetSessions(sessionDomain)
+	if err != nil {
+		ctx.JSON(err.Code, err.Message)
+		return
+	}
+
+	ctx.JSON(http.StatusOK, sessions)
+	return
 }
