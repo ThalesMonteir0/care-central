@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"github.com/ThalesMonteir0/care-central/adapter/input/controller/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -10,23 +11,23 @@ func InitRoutes(app *gin.Engine,
 	sessionController SessionControllerInterface) {
 
 	//users
-	app.POST("/user", userController.CreateUser)
-	app.GET("/user/:id", userController.GetUser)
-	app.DELETE("/user/:id", userController.DeleteUser)
+	app.POST("/user", middlewares.VerifyTokenMiddleware, userController.CreateUser)
+	app.GET("/user/:id", middlewares.VerifyTokenMiddleware, userController.GetUser)
+	app.DELETE("/user/:id", middlewares.VerifyTokenMiddleware, userController.DeleteUser)
 	app.POST("/login", userController.Login)
 
 	//patients
-	app.GET("/patient/:clinic_id", patientController.getPatient)
-	app.POST("/patient", patientController.CreatePatient)
-	app.PUT("/patient/:id", patientController.UpdatePatient)
-	app.DELETE("/patient/:id", patientController.DeletePatient)
+	app.GET("/patient/:clinic_id", middlewares.VerifyTokenMiddleware, patientController.getPatient)
+	app.POST("/patient", middlewares.VerifyTokenMiddleware, patientController.CreatePatient)
+	app.PUT("/patient/:id", middlewares.VerifyTokenMiddleware, patientController.UpdatePatient)
+	app.DELETE("/patient/:id", middlewares.VerifyTokenMiddleware, patientController.DeletePatient)
 
 	//sessions
-	app.POST("/session", sessionController.CreateSession)
-	app.GET("/session/:clinic_id", sessionController.GetSession)
-	app.DELETE("/session/:clinic_id/:session_id", sessionController.Delete)
-	app.PUT("/session/:clinic_id/:session_id", sessionController.UpdateSession)
+	app.POST("/session", middlewares.VerifyTokenMiddleware, sessionController.CreateSession)
+	app.GET("/session/:clinic_id", middlewares.VerifyTokenMiddleware, sessionController.GetSession)
+	app.DELETE("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.Delete)
+	app.PUT("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.UpdateSession)
 
 	//form_session
-	app.PUT("/form_session/session/:session_id", sessionController.CreateFormSession)
+	app.PUT("/form_session/session/:session_id", middlewares.VerifyTokenMiddleware, sessionController.CreateFormSession)
 }

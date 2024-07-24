@@ -43,7 +43,7 @@ func (ud *UserDomain) GenerateToken() (string, *rest_err.RestErr) {
 		"email":     ud.Email,
 		"clinic_id": ud.ClinicID,
 		"role":      ud.Role,
-		"exp":       time.Now().Add(time.Hour * 3),
+		"exp":       time.Now().Add(time.Hour * 3).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
