@@ -8,10 +8,10 @@ import (
 )
 
 func (s *sessionRepository) FindSessionByID(domain domain.SessionDomain) (*domain.SessionDomain, *rest_err.RestErr) {
-	clinicID := domain.ClinicID
+	sessionID := domain.ID
 	var sessionEntity entity.Session
 
-	if result := s.db.First(&sessionEntity, clinicID); result.Error != nil {
+	if result := s.db.First(&sessionEntity, sessionID); result.Error != nil {
 		return nil, rest_err.NewBadRequestError("unable get session by session_id")
 	}
 
