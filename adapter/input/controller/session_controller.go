@@ -14,6 +14,7 @@ type SessionControllerInterface interface {
 	CreateSession(ctx *gin.Context)
 	UpdateSession(ctx *gin.Context)
 	Delete(ctx *gin.Context)
+	CreateFormSession(ctx *gin.Context)
 }
 
 func NewSessionController(service input.SessionServiceInterface) SessionControllerInterface {

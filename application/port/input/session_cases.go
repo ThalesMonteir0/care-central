@@ -10,4 +10,5 @@ type SessionServiceInterface interface {
 	CreateSession(domain.SessionDomain) *rest_err.RestErr
 	UpdateSession(domain.SessionDomain) *rest_err.RestErr
 	DeleteSession(domain.SessionDomain) *rest_err.RestErr
+	CreateFormSession(domain.SessionDomain) *rest_err.RestErr
 }

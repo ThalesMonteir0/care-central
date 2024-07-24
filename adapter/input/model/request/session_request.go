@@ -17,3 +17,8 @@ type SessionUpdateRequest struct {
 	ValueSession float64   `json:"value_session" biding:"required,min=0"`
 	DtSession    time.Time `json:"dt_session" biding:"required"`
 }
+
+type FormSessionRequest struct {
+	SessionReport string `json:"session_report" biding:"required"`
+	Obs           string `json:"obs" biding:"required"`
+}
