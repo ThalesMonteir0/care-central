@@ -30,4 +30,10 @@ func InitRoutes(app *gin.Engine,
 
 	//form_session
 	app.PUT("/form_session/session/:session_id", middlewares.VerifyTokenMiddleware, sessionController.CreateFormSession)
+
+	//movements
+	app.GET("/movements/:clinic_id")
+	app.POST("movements/clinic/:clinic_id/")
+	app.DELETE("/movements/clinic/:clinic_id/movement/:movement_id")
+
 }
