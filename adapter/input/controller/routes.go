@@ -8,7 +8,8 @@ import (
 func InitRoutes(app *gin.Engine,
 	userController UserControllerInterface,
 	patientController PatientControllerInterface,
-	sessionController SessionControllerInterface) {
+	sessionController SessionControllerInterface,
+	movementController MovementControllerInterface) {
 
 	//users
 	app.POST("/user", middlewares.VerifyTokenMiddleware, userController.CreateUser)
@@ -32,8 +33,8 @@ func InitRoutes(app *gin.Engine,
 	app.PUT("/form_session/session/:session_id", middlewares.VerifyTokenMiddleware, sessionController.CreateFormSession)
 
 	//movements
-	app.GET("/movements/:clinic_id")
-	app.POST("movements/clinic/:clinic_id/")
-	app.DELETE("/movements/clinic/:clinic_id/movement/:movement_id")
+	app.GET("/movements/:clinic_id", middlewares.VerifyTokenMiddleware, movementController.FindAll)
+	app.POST("movements/clinic/:clinic_id/", middlewares.VerifyTokenMiddleware, movementController.CreateMovement)
+	app.DELETE("/movements/clinic/:clinic_id/movement/:movement_id", middlewares.VerifyTokenMiddleware, movementController.DeleteMovement)
 
 }

@@ -19,18 +19,28 @@ func main() {
 
 	db := database.NewPostgresql()
 
-	userController, patientController, sessionController := initDependencies(db)
+	userController, patientController, sessionController, movementController := initDependencies(db)
 
 	app := gin.Default()
 
-	controller.InitRoutes(app, userController, patientController, sessionController)
+	controller.InitRoutes(
+		app,
+		userController,
+		patientController,
+		sessionController,
+		movementController,
+	)
 
 	if err := app.Run(":5000"); err != nil {
 		log.Fatal("Error loading application")
 	}
 }
 
-func initDependencies(db *gorm.DB) (controller.UserControllerInterface, controller.PatientControllerInterface, controller.SessionControllerInterface) {
+func initDependencies(db *gorm.DB) (
+	controller.UserControllerInterface,
+	controller.PatientControllerInterface,
+	controller.SessionControllerInterface,
+	controller.MovementControllerInterface) {
 
 	userRepository := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)
@@ -44,5 +54,9 @@ func initDependencies(db *gorm.DB) (controller.UserControllerInterface, controll
 	sessionService := service.NewSessionService(sessionRepository)
 	sessionController := controller.NewSessionController(sessionService)
 
-	return userController, patientController, sessionController
+	movementRepository := repository.NewMovementRepository(db)
+	movementService := service.NewMovementService(movementRepository)
+	movementController := controller.NewMovementController(movementService)
+
+	return userController, patientController, sessionController, movementController
 }
