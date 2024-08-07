@@ -6,6 +6,13 @@ import (
 )
 
 func (m *movementService) CreateMovement(domain domain.MovementDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if domain.Value <= 0 {
+		return rest_err.NewBadRequestError("value cannot be negative or null")
+	}
+
+	if err := m.repository.Create(domain); err != nil {
+		return err
+	}
+
+	return nil
 }

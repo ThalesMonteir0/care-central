@@ -3,8 +3,8 @@ package entity
 import "gorm.io/gorm"
 
 type Movement struct {
-	gorm.DB
-	clinicID       int
+	gorm.Model
+	ClinicID       int
 	Clinic         Clinic
 	MovementTypeID int
 	MovementsTypes MovementsTypes
