@@ -14,6 +14,7 @@ func ConvertMovementDomainToEntity(domain domain.MovementDomain) entity.Movement
 	}
 
 	movementEntity.ID = uint(domain.ID)
+	movementEntity.CreatedAt = domain.CreatedAt
 
 	return movementEntity
 }

@@ -6,6 +6,10 @@ import (
 )
 
 func (m *movementService) FindAllMovements(domain domain.MovementDomain) ([]domain.MovementDomain, *rest_err.RestErr) {
-	//TODO implement me
-	panic("implement me")
+	movements, err := m.repository.FindAll(domain)
+	if err != nil {
+		return nil, err
+	}
+
+	return movements, nil
 }
