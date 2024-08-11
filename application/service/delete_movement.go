@@ -6,6 +6,9 @@ import (
 )
 
 func (m *movementService) DeleteMovement(domain domain.MovementDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if err := m.repository.Delete(domain); err != nil {
+		return err
+	}
+
+	return nil
 }
