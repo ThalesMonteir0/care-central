@@ -37,4 +37,7 @@ func InitRoutes(app *gin.Engine,
 	app.POST("movements/clinic/:clinic_id/", middlewares.VerifyTokenMiddleware, movementController.CreateMovement)
 	app.DELETE("/movements/clinic/:clinic_id/movement/:movement_id", middlewares.VerifyTokenMiddleware, movementController.DeleteMovement)
 
+	//PIX
+	app.POST("/create_pix")
+
 }
