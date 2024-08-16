@@ -9,7 +9,9 @@ func InitRoutes(app *gin.Engine,
 	userController UserControllerInterface,
 	patientController PatientControllerInterface,
 	sessionController SessionControllerInterface,
-	movementController MovementControllerInterface) {
+	movementController MovementControllerInterface,
+	createPixCtrl CreatePixController,
+) {
 
 	//users
 	app.POST("/user", middlewares.VerifyTokenMiddleware, userController.CreateUser)
@@ -38,6 +40,6 @@ func InitRoutes(app *gin.Engine,
 	app.DELETE("/movements/clinic/:clinic_id/movement/:movement_id", middlewares.VerifyTokenMiddleware, movementController.DeleteMovement)
 
 	//PIX
-	app.POST("/create_pix")
+	app.POST("/create_pix", middlewares.VerifyTokenMiddleware, createPixCtrl.CreatePix)
 
 }

@@ -2,6 +2,7 @@ package main
 
 import (
 	"github.com/ThalesMonteir0/care-central/adapter/input/controller"
+	"github.com/ThalesMonteir0/care-central/adapter/output/http_client"
 	"github.com/ThalesMonteir0/care-central/adapter/output/repository"
 	"github.com/ThalesMonteir0/care-central/application/service"
 	"github.com/ThalesMonteir0/care-central/configuration/database"
@@ -19,7 +20,7 @@ func main() {
 
 	db := database.NewPostgresql()
 
-	userController, patientController, sessionController, movementController := initDependencies(db)
+	userController, patientController, sessionController, movementController, createPixController := initDependencies(db)
 
 	app := gin.Default()
 
@@ -29,6 +30,7 @@ func main() {
 		patientController,
 		sessionController,
 		movementController,
+		createPixController,
 	)
 
 	if err := app.Run(":5000"); err != nil {
@@ -40,7 +42,9 @@ func initDependencies(db *gorm.DB) (
 	controller.UserControllerInterface,
 	controller.PatientControllerInterface,
 	controller.SessionControllerInterface,
-	controller.MovementControllerInterface) {
+	controller.MovementControllerInterface,
+	controller.CreatePixController,
+) {
 
 	userRepository := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepository)
@@ -58,5 +62,13 @@ func initDependencies(db *gorm.DB) (
 	movementService := service.NewMovementService(movementRepository)
 	movementController := controller.NewMovementController(movementService)
 
-	return userController, patientController, sessionController, movementController
+	pixGeradosRepository := repository.NewPixGeradosRepository(db)
+	pixGeradosService := service.NewPixGeradosService(pixGeradosRepository)
+
+	httpClientPix := http_client.NewHttpClientPix()
+
+	createPixService := service.NewCreatePixService(httpClientPix, pixGeradosService)
+	createPixController := controller.NewCreatePixController(createPixService)
+
+	return userController, patientController, sessionController, movementController, createPixController
 }
