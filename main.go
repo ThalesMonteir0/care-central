@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/ThalesMonteir0/care-central/adapter/input/controller"
-	"github.com/ThalesMonteir0/care-central/adapter/output/http_client"
-	"github.com/ThalesMonteir0/care-central/adapter/output/repository"
-	"github.com/ThalesMonteir0/care-central/application/service"
-	"github.com/ThalesMonteir0/care-central/configuration/database"
+	"github.com/ThalesMonteir0/care-central/internal/adapter/input/controller"
+	"github.com/ThalesMonteir0/care-central/internal/adapter/output/http_client"
+	"github.com/ThalesMonteir0/care-central/internal/adapter/output/repository"
+	"github.com/ThalesMonteir0/care-central/internal/application/service"
+	"github.com/ThalesMonteir0/care-central/pkg/database"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
