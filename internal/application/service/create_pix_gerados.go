@@ -6,6 +6,9 @@ import (
 )
 
 func (p *pixGeradosService) CreatePixGerado(domain domain.PixGeradosDomain) *rest_err.RestErr {
-	//TODO implement me
-	panic("implement me")
+	if err := p.repository.CreatePixGerados(domain); err != nil {
+		return err
+	}
+
+	return nil
 }

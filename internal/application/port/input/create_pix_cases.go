@@ -6,5 +6,5 @@ import (
 )
 
 type CreatePixService interface {
-	CreatePix(domain.CreatePixDomain) *rest_err.RestErr
+	CreatePix(domain.CreatePixDomain) (string, *rest_err.RestErr)
 }
