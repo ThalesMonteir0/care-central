@@ -14,3 +14,7 @@ type PatientRequestUpdate struct {
 	ResponsibleCPF string    `json:"responsible_cpf"`
 	DateOfBirth    time.Time `json:"date_of_birth"`
 }
+
+type PatientFilters struct {
+	PatientID string `json:"patient_id"`
+}
