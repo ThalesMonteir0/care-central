@@ -22,3 +22,10 @@ type FormSessionRequest struct {
 	SessionReport string `json:"session_report" biding:"required"`
 	Obs           string `json:"obs" biding:"required"`
 }
+
+type SessionFilters struct {
+	DtSessionInitial string `json:"dt_session_initial"`
+	DtSessionFinal   string `json:"dt_session_final"`
+	PatientID        string `json:"patient_id"`
+	Paid             string `json:"paid"`
+}

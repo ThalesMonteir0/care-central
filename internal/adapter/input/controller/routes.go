@@ -20,14 +20,14 @@ func InitRoutes(app *gin.Engine,
 	app.POST("/login", userController.Login)
 
 	//patients
-	app.GET("/patient/:clinic_id", patientController.getPatient)
+	app.GET("/patient/:clinic_id", middlewares.VerifyTokenMiddleware, patientController.getPatient)
 	app.POST("/patient", middlewares.VerifyTokenMiddleware, patientController.CreatePatient)
 	app.PUT("/patient/:id", middlewares.VerifyTokenMiddleware, patientController.UpdatePatient)
 	app.DELETE("/patient/:id", middlewares.VerifyTokenMiddleware, patientController.DeletePatient)
 
 	//sessions
 	app.POST("/session", middlewares.VerifyTokenMiddleware, sessionController.CreateSession)
-	app.GET("/session/:clinic_id", middlewares.VerifyTokenMiddleware, sessionController.GetSession)
+	app.GET("/session/:clinic_id", sessionController.GetSession)
 	app.DELETE("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.Delete)
 	app.PUT("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.UpdateSession)
 
