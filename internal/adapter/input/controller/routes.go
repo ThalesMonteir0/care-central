@@ -27,7 +27,7 @@ func InitRoutes(app *gin.Engine,
 
 	//sessions
 	app.POST("/session", middlewares.VerifyTokenMiddleware, sessionController.CreateSession)
-	app.GET("/session/:clinic_id", sessionController.GetSession)
+	app.GET("/session/:clinic_id", middlewares.VerifyTokenMiddleware, sessionController.GetSession)
 	app.DELETE("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.Delete)
 	app.PUT("/session/:clinic_id/:session_id", middlewares.VerifyTokenMiddleware, sessionController.UpdateSession)
 

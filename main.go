@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/input/controller"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/output/http_client"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/output/repository"
@@ -10,10 +11,13 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/gorm"
 	"log"
+	"os"
 )
 
 func main() {
 	err := godotenv.Load()
+	isPrd := os.Getenv("IS_PRD")
+	fmt.Printf("is prd é: %s \n\n", isPrd)
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}

@@ -1,6 +1,6 @@
 package entity
 
-type MovementsTypes struct {
+type MovementType struct {
 	ID   int
 	Type string
 }

@@ -6,3 +6,9 @@ type MovementRequest struct {
 	Value          float64 `json:"value" biding:"required"`
 	Description    string  `json:"description" biding:"required"`
 }
+
+type MovementsFilters struct {
+	Type      string `json:"type"`
+	DtInitial string `json:"dt_initial"`
+	DtFinal   string `json:"dt_final"`
+}

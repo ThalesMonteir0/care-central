@@ -7,7 +7,7 @@ type Movement struct {
 	ClinicID       int
 	Clinic         Clinic
 	MovementTypeID int
-	MovementsTypes MovementsTypes
+	MovementType   MovementType
 	Value          float64
 	Description    string
 }
