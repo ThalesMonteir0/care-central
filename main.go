@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/input/controller"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/output/http_client"
 	"github.com/ThalesMonteir0/care-central/internal/adapter/output/repository"
@@ -9,20 +8,21 @@ import (
 	"github.com/ThalesMonteir0/care-central/pkg/database"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"go.uber.org/zap"
 	"gorm.io/gorm"
 	"log"
-	"os"
 )
 
 func main() {
 	err := godotenv.Load()
-	isPrd := os.Getenv("IS_PRD")
-	fmt.Printf("is prd é: %s \n\n", isPrd)
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
 
 	db := database.NewPostgresql()
+
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
 
 	userController, patientController, sessionController, movementController, createPixController := initDependencies(db)
 
@@ -42,7 +42,7 @@ func main() {
 	}
 }
 
-func initDependencies(db *gorm.DB) (
+func initDependencies(db *gorm.DB, logger *zap.Logger) (
 	controller.UserControllerInterface,
 	controller.PatientControllerInterface,
 	controller.SessionControllerInterface,
@@ -50,29 +50,28 @@ func initDependencies(db *gorm.DB) (
 	controller.CreatePixController,
 ) {
 
-	userRepository := repository.NewUserRepository(db)
-	userService := service.NewUserService(userRepository)
-	userController := controller.NewUserController(userService)
+	userRepository := repository.NewUserRepository(db, logger)
+	userService := service.NewUserService(userRepository, logger)
+	userController := controller.NewUserController(userService, logger)
 
-	patientRepository := repository.NewPatientRepository(db)
-	patientService := service.NewPatientService(patientRepository)
-	patientController := controller.NewPatientController(patientService)
+	patientRepository := repository.NewPatientRepository(db, logger)
+	patientService := service.NewPatientService(patientRepository, logger)
+	patientController := controller.NewPatientController(patientService, logger)
 
-	sessionRepository := repository.NewSessionsRepository(db)
-	sessionService := service.NewSessionService(sessionRepository)
-	sessionController := controller.NewSessionController(sessionService)
+	sessionRepository := repository.NewSessionsRepository(db, logger)
+	sessionService := service.NewSessionService(sessionRepository, logger)
+	sessionController := controller.NewSessionController(sessionService, logger)
 
-	movementRepository := repository.NewMovementRepository(db)
-	movementService := service.NewMovementService(movementRepository)
-	movementController := controller.NewMovementController(movementService)
+	movementRepository := repository.NewMovementRepository(db, logger)
+	movementService := service.NewMovementService(movementRepository, logger)
+	movementController := controller.NewMovementController(movementService, logger)
 
-	pixGeradosRepository := repository.NewPixGeradosRepository(db)
-	pixGeradosService := service.NewPixGeradosService(pixGeradosRepository)
+	pixGeradosRepository := repository.NewPixGeradosRepository(db, logger)
+	pixGeradosService := service.NewPixGeradosService(pixGeradosRepository, logger)
 
-	httpClientPix := http_client.NewHttpClientPix()
-
-	createPixService := service.NewCreatePixService(httpClientPix, pixGeradosService)
-	createPixController := controller.NewCreatePixController(createPixService)
+	httpClientPix := http_client.NewHttpClientPix(logger)
+	createPixService := service.NewCreatePixService(httpClientPix, pixGeradosService, logger)
+	createPixController := controller.NewCreatePixController(createPixService, logger)
 
 	return userController, patientController, sessionController, movementController, createPixController
 }
