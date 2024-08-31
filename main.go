@@ -24,7 +24,7 @@ func main() {
 	logger, _ := zap.NewProduction()
 	defer logger.Sync()
 
-	userController, patientController, sessionController, movementController, createPixController := initDependencies(db)
+	userController, patientController, sessionController, movementController, createPixController := initDependencies(db, logger)
 
 	app := gin.Default()
 
