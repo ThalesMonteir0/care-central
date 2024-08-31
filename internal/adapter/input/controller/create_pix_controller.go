@@ -6,20 +6,23 @@ import (
 	"github.com/ThalesMonteir0/care-central/internal/application/port/input"
 	"github.com/ThalesMonteir0/care-central/pkg/rest_err"
 	"github.com/gin-gonic/gin"
+	"go.uber.org/zap"
 	"net/http"
 )
 
 type createPixController struct {
 	service input.CreatePixService
+	logger  *zap.Logger
 }
 
 type CreatePixController interface {
 	CreatePix(ctx *gin.Context)
 }
 
-func NewCreatePixController(service input.CreatePixService) CreatePixController {
+func NewCreatePixController(service input.CreatePixService, logger *zap.Logger) CreatePixController {
 	return &createPixController{
 		service: service,
+		logger:  logger,
 	}
 }
 

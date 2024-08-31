@@ -9,6 +9,7 @@ import (
 	"github.com/ThalesMonteir0/care-central/internal/application/domain"
 	"github.com/ThalesMonteir0/care-central/internal/application/port/output"
 	"github.com/ThalesMonteir0/care-central/pkg/rest_err"
+	"go.uber.org/zap"
 	"io"
 	"net/http"
 	"os"
@@ -25,10 +26,13 @@ const (
 )
 
 type httpClientPix struct {
+	logger *zap.Logger
 }
 
-func NewHttpClientPix() output.HttpClientPix {
-	return &httpClientPix{}
+func NewHttpClientPix(logger *zap.Logger) output.HttpClientPix {
+	return &httpClientPix{
+		logger: logger,
+	}
 }
 
 func (h *httpClientPix) CreatePixCob(domain domain.CreatePixDomain, token string) (response.CreatePixEFIResponse, *rest_err.RestErr) {
