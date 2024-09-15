@@ -1,0 +1,43 @@
+name: Deploy to Cloud Run
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+#Fazendo autenticaçao com o google cloud
+      - name: Set up google cloud credentials
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+
+      #Configurando gcloud
+      - name: Configure gcloud
+        run: |
+          gcloud config set project ${{ secrets.GCP_PROJECT_ID }} 
+          gcloud config set run/region us-central1
+          gcloud auth configure-docker us-central1-docker.pkg.dev
+
+      #Build and push docker image
+      - name: Build and push docker image
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker-repository/carecentralapi:latest
+          docker build -t $IMAGE .
+          docker push $IMAGE
+
+      #Deploy no cloud run
+      - name: Deploy to Cloud Run
+        run: |
+          IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker-repository/carecentralapi:latest
+          gcloud run deploy carecentralapi \
+          --image $IMAGE \
+          --platform managed \
+          --region us-central1 \
+          --allow-unauthenticated

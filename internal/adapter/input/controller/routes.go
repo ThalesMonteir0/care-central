@@ -42,4 +42,5 @@ func InitRoutes(app *gin.Engine,
 	//PIX
 	app.POST("/create_pix", middlewares.VerifyTokenMiddleware, createPixCtrl.CreatePix)
 
+	app.GET("/health-check", HealthCheck)
 }
