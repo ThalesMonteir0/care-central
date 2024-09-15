@@ -25,6 +25,11 @@ jobs:
           gcloud config set run/region us-central1
           gcloud auth configure-docker us-central1-docker.pkg.dev
 
+      #create .env
+      - name: create env file
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
+
       #Build and push docker image
       - name: Build and push docker image
         run: |
