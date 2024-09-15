@@ -30,7 +30,7 @@ jobs:
         run: |
           echo "${{ secrets.ENV_FILE }}" > .env
 
-      #Build and push docker image
+      #Build and push docker image.
       - name: Build and push docker image
         run: |
           IMAGE="us-central1-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/docker-repository/carecentralapi:latest"
